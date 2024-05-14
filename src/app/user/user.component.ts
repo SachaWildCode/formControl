@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { User } from '../models/user.model';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-user',
@@ -11,23 +11,40 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  username = new FormControl('');
-  email = new FormControl('');
-  password = new FormControl('');
-  street = new FormControl('');
-  postalCode = new FormControl();
-  city = new FormControl('');
+  constructor(private fb: FormBuilder) {}
+
+  userForm = this.fb.group({
+    credentials: this.fb.group({
+      username: 'JohnDoe',
+      email: 'JohnDoe@gmail.com',
+      password: 'eeeeee',
+    }),
+    address: this.fb.group({
+      street: 16,
+      postalCode: 69870,
+      city: 'New York',
+    }),
+  });
 
   user!: User;
+
   createUser($event: Event) {
     $event.preventDefault();
-    this.user = new User(
-      this.username,
-      this.email,
-      this.password,
-      this.postalCode,
-      this.city,
-      this.street
-    );
+
+    // Ensure form values are not null or undefined before accessing their properties
+    const credentials = this.userForm.value.credentials;
+    const address = this.userForm.value.address;
+
+    if (credentials && address) {
+      this.user = new User(
+        credentials.username!,
+        credentials.email!,
+        credentials.password!,
+        address.postalCode!,
+        address.city!,
+        address.street!
+      );
+    }
+    return null;
   }
 }

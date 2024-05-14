@@ -1,32 +1,52 @@
 <div>
   <div *ngFor="let item of user | keyvalue">
-    {{ item.key }} : {{ item.value.value }}
+    {{ item.key }} : {{ item.value }}
   </div>
-  <form>
-    <label>
-      Username
-      <input type="text" [formControl]="username" />
-    </label>
-    <label>
-      Email
-      <input type="email" [formControl]="email" />
-    </label>
-    <label>
-      Password
-      <input type="password" [formControl]="password" />
-    </label>
-    <label>
-      Street
-      <input type="text" [formControl]="street" />
-    </label>
-    <label>
-      Postal Code
-      <input type="text" [formControl]="postalCode" />
-    </label>
-    <label>
-      City
-      <input type="text" [formControl]="city" />
-    </label>
-    <button (click)="createUser($event)">Inscription</button>
+  <form [formGroup]="userForm" (ngSubmit)="createUser($event)">
+    <div formGroupName="credentials">
+      <div>
+        <label
+          >username:
+          <input type="text" formControlName="username" />
+        </label>
+      </div>
+      <div>
+        <label
+          >email:
+          <input type="text" formControlName="email" />
+        </label>
+      </div>
+      <div>
+        <label
+          >password:
+          <input type="text" formControlName="password" />
+        </label>
+      </div>
+    </div>
+
+    <div formGroupName="address">
+      <div>
+        <label>
+          Street:
+          <input type="text" formControlName="street" />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          City:
+          <input type="text" formControlName="city" />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Zip code:
+          <input type="text" formControlName="postalCode" />
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!userForm.valid">Submit</button>
   </form>
 </div>
