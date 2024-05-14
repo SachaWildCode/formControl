@@ -1,0 +1,32 @@
+<div>
+  <div *ngFor="let item of user | keyvalue">
+    {{ item.key }} : {{ item.value.value }}
+  </div>
+  <form>
+    <label>
+      Username
+      <input type="text" [formControl]="username" />
+    </label>
+    <label>
+      Email
+      <input type="email" [formControl]="email" />
+    </label>
+    <label>
+      Password
+      <input type="password" [formControl]="password" />
+    </label>
+    <label>
+      Street
+      <input type="text" [formControl]="street" />
+    </label>
+    <label>
+      Postal Code
+      <input type="text" [formControl]="postalCode" />
+    </label>
+    <label>
+      City
+      <input type="text" [formControl]="city" />
+    </label>
+    <button (click)="createUser($event)">Inscription</button>
+  </form>
+</div>
