@@ -11,6 +11,8 @@ import { User } from '../models/user.model';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
+  public user!: User;
+
   constructor(private fb: FormBuilder) {}
 
   userForm = this.fb.group({
@@ -25,8 +27,6 @@ export class UserComponent {
       city: 'New York',
     }),
   });
-
-  user!: User;
 
   createUser($event: Event) {
     $event.preventDefault();
